@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: demoapp
-        image: docker.io/rajarammurali513/demoapp:v1.0.0
+        image: docker.io/rajarammurali513/demoapp:1.0.0
         ports:
         - containerPort: 8080
