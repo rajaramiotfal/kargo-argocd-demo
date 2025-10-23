@@ -1,0 +1,18 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: kargo
+spec:
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: demo-warehouse
+  promotionMechanisms:
+    gitRepoUpdates:
+    - repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
+      writeBranch: main
+      kustomize:
+        images:
+        - image: docker.io/rajarammurali513/demoapp
+          path: envs/dev

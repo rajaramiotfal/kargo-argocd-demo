@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-multi-env
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+      - env: qa
+      - env: prod
+  template:
+    metadata:
+      name: demo-{{env}}
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: demo-{{env}}
+      source:
+        repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
+        targetRevision: main
+        path: envs/{{env}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true

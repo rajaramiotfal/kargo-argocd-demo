@@ -1,0 +1,5 @@
+resources:
+- deployment.yaml
+images:
+- name: docker.io/rajarammurali513/demoapp
+  newTag: v1.0.0
