@@ -5,26 +5,29 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - env: dev
-      - env: qa
-      - env: prod
+    - list:
+        elements:
+          - env: dev
+            server: https://host.docker.internal:6510
+          - env: qa
+            server: https://host.docker.internal:6514
+          - env: prod
+            server: https://host.docker.internal:6522
   template:
     metadata:
       name: demo-{{env}}
     spec:
       project: default
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: demo-{{env}}
       source:
         repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
         targetRevision: main
         path: envs/{{env}}
+      destination:
+        server: '{{server}}'
+        namespace: demo-{{env}}
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true
