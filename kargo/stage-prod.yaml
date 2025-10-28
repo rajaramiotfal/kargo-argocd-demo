@@ -2,12 +2,12 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: prod
-  namespace: kargo
+  namespace: demoapp
 spec:
   requestedFreight:
     - origin:
-        kind: Stage
-        name: qa
+        kind: Warehouse
+        name: demoapp-warehouse
   promotionTemplate:
     spec:
       steps:

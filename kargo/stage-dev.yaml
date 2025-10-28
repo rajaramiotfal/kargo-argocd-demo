@@ -2,7 +2,7 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: dev
-  namespace: kargo
+  namespace: demoapp
 spec:
   requestedFreight:
     - origin:
@@ -23,4 +23,3 @@ spec:
           config:
             message: "Promote to Dev"
         - uses: git-push
-
