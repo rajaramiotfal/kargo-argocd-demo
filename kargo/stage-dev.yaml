@@ -5,14 +5,22 @@ metadata:
   namespace: kargo
 spec:
   requestedFreight:
-  - origin:
-      kind: Warehouse
-      name: demo-warehouse
-  promotionMechanisms:
-    gitRepoUpdates:
-    - repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
-      writeBranch: main
-      kustomize:
-        images:
-        - image: docker.io/rajarammurali513/demoapp
-          path: envs/dev
+    - origin:
+        kind: Warehouse
+        name: demoapp-warehouse
+  promotionTemplate:
+    spec:
+      steps:
+        - uses: git-clone
+          config:
+            repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
+            branch: main
+        - uses: kustomize-set-image
+          config:
+            images:
+              - name: docker.io/rajarammurali513/demoapp
+        - uses: git-commit
+          config:
+            message: "Promote to Dev"
+        - uses: git-push
+

@@ -5,14 +5,21 @@ metadata:
   namespace: kargo
 spec:
   requestedFreight:
-  - origin:
-      kind: Stage
-      name: dev
-  promotionMechanisms:
-    gitRepoUpdates:
-    - repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
-      writeBranch: main
-      kustomize:
-        images:
-        - image: docker.io/rajarammurali513/demoapp
-          path: envs/qa
+    - origin:
+        kind: Stage
+        name: dev
+  promotionTemplate:
+    spec:
+      steps:
+        - uses: git-clone
+          config:
+            repoURL: https://github.com/rajaramiotfal/kargo-argocd-demo.git
+            branch: main
+        - uses: kustomize-set-image
+          config:
+            images:
+              - name: docker.io/rajarammurali513/demoapp
+        - uses: git-commit
+          config:
+            message: "Promote to QA"
+        - uses: git-push
